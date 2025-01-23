@@ -108,7 +108,11 @@ M.setup_common_keymaps = function()
 	local opts = { noremap = true, silent = true }
 
 	--vim.keymap.set('n', 'gd', preview_definition, opts)
-	vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+	vim.keymap.set('n', 'gd', function()
+		vim.lsp.buf.definition()
+		vim.cmd("normal! m'")
+		vim.notify("Use CMD/Ctrl-O to jump back", vim.log.levels.INFO)
+	end, opts)
 
 	vim.keymap.set('n', 'K', function()
 		vim.lsp.buf.hover()
